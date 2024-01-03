@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Satellite.Models", "Satellite.Models\Satellite.Models.csproj", "{87685B2F-463D-4955-8CDA-E593F1AD088A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Satellite.API", "API\Satellite.API.csproj", "{0999595D-E62D-4E7C-889E-5E35B32B595C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Satellite.API", "Satellite.API\Satellite.API.csproj", "{0999595D-E62D-4E7C-889E-5E35B32B595C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
