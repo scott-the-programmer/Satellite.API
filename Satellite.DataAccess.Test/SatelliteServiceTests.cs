@@ -55,47 +55,6 @@ namespace Satellite.DataAccess.Services.Tests
             });
         }
 
-        [Fact]
-        public async Task GetSatellitesAsync_CalculatesRelativeXY()
-        {
-            // Arrange
-            var httpMock = new Mock<IHttpClient>();
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(GetSampleSatelliteDataJson()),
-            };
-
-            httpMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(response);
-
-            var nasaSatelliteClient = new N2YOSatelliteClient(httpMock.Object, "1234");
-            var memoryCacheMock = new Mock<IMemoryCache>();
-            var data = JsonSerializer.Deserialize<SatelliteInfo>(GetSampleSatelliteDataJson());
-
-            var service = new SatelliteService(nasaSatelliteClient, memoryCacheMock.Object, new CurrentCoords
-            {
-                Latitude = 1,
-                Longitude = 2,
-            });
-
-            object cachedData = null;
-
-            var cachedEntry = new Mock<ICacheEntry>();
-            memoryCacheMock.Setup(x => x.TryGetValue("iridium", out cachedData))
-                           .Returns(false);
-
-            memoryCacheMock.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(cachedEntry.Object);
-
-            // Act
-            var satellites = await service.GetIridiumsAsync();
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                Assert.Equal(-175.73143117483605, satellites.First().RelativeX, 0.001);
-                Assert.Equal(-60.9823, satellites.First().RelativeY, 0.001);
-            });
-        }
-
 
         [Fact]
         public async Task GetSatellitesAsync_FetchesDataFromClientIfNotCached()

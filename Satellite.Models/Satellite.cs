@@ -14,11 +14,6 @@ namespace Satellite.Models
         [JsonProperty("longitude")]
         public float Longitude { get; set; }
 
-        [JsonProperty("relativeX")]
-        public float RelativeX { get; set; }
-
-        [JsonProperty("relativeY")]
-        public float RelativeY { get; set; }
     }
 
 }

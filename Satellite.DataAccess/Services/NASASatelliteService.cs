@@ -45,16 +45,11 @@ namespace Satellite.DataAccess.Services
             var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90, (int)type);
             var satellites = response.Select(i =>
             {
-                var relativeX = CalculateRelativeX(i.Satlng, _coords.Longitude);
-                var relativeY = CalculateRelativeY(i.Satlat, _coords.Latitude);
-
                 return new Models.Satellite
                 {
                     Name = i.Satname,
                     Latitude = i.Satlat,
                     Longitude = i.Satlng,
-                    RelativeX = relativeX,
-                    RelativeY = relativeY
                 };
             });
 
