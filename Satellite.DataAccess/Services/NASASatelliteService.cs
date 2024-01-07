@@ -9,36 +9,35 @@ namespace Satellite.DataAccess.Services
         private readonly CurrentCoords _coords;
         private readonly string _cacheKey;
 
-        public SatelliteService(ISatelliteClient nasaSatelliteClient, IMemoryCache cache, CurrentCoords coords, string cacheKey = "the_satellite_bin")
+        public SatelliteService(ISatelliteClient nasaSatelliteClient, IMemoryCache cache, CurrentCoords coords)
         {
             _nasaSatelliteClient = nasaSatelliteClient;
             _cache = cache;
-            _cacheKey = cacheKey;
             _coords = coords;
         }
 
         async public Task<IEnumerable<Models.Satellite>> GetWeatherStationsAsync()
         {
-            return await GetSatellitesAsync(SatelliteType.Weather);
+            return await GetSatellitesAsync(SatelliteType.Weather, "weather");
         }
         async public Task<IEnumerable<Models.Satellite>> GetISSAsync()
         {
-            return await GetSatellitesAsync(SatelliteType.ISS);
+            return await GetSatellitesAsync(SatelliteType.ISS, "iss");
         }
 
         async public Task<IEnumerable<Models.Satellite>> GetStarlinksAsync()
         {
-            return await GetSatellitesAsync(SatelliteType.Starlink);
+            return await GetSatellitesAsync(SatelliteType.Starlink, "starlink");
         }
 
         async public Task<IEnumerable<Models.Satellite>> GetIridiumsAsync()
         {
-            return await GetSatellitesAsync(SatelliteType.Iridium);
+            return await GetSatellitesAsync(SatelliteType.Iridium, "iridium");
         }
 
-        async public Task<IEnumerable<Models.Satellite>> GetSatellitesAsync(SatelliteType type)
+        async public Task<IEnumerable<Models.Satellite>> GetSatellitesAsync(SatelliteType type, string cacheKey)
         {
-            var cachedData = GetSatellitesFromCache();
+            var cachedData = GetSatellitesFromCache(cacheKey);
             if (cachedData != null && cachedData.Any())
             {
                 return cachedData;
@@ -52,20 +51,20 @@ namespace Satellite.DataAccess.Services
                 Longitude = i.Satlng,
             });
 
-            CacheSatelliteData(satellites);
+            CacheSatelliteData(cacheKey, satellites);
 
             return satellites;
         }
 
-        public IEnumerable<Models.Satellite>? GetSatellitesFromCache()
+        public IEnumerable<Models.Satellite>? GetSatellitesFromCache(string key)
         {
-            var data = _cache.Get<IEnumerable<Models.Satellite>>(_cacheKey);
+            var data = _cache.Get<IEnumerable<Models.Satellite>>(key);
             return data;
         }
 
-        public void CacheSatelliteData(IEnumerable<Models.Satellite> value)
+        public void CacheSatelliteData(string key, IEnumerable<Models.Satellite> value)
         {
-            _cache.Set(_cacheKey, value, DateTimeOffset.Now.Add(TimeSpan.FromMinutes(5)));
+            _cache.Set(key, value, DateTimeOffset.Now.Add(TimeSpan.FromMinutes(5)));
         }
     }
 }

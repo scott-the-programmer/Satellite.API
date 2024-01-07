@@ -38,10 +38,10 @@ namespace Satellite.DataAccess.Services.Tests
             {
                 Latitude = 0,
                 Longitude = 0
-            }, TEST_CACHE_KEY);
+            });
 
             // Mock the cache to return null (data not cached)
-            memoryCacheMock.Setup(x => x.TryGetValue(TEST_CACHE_KEY, out cachedData))
+            memoryCacheMock.Setup(x => x.TryGetValue("iridium", out cachedData))
                            .Returns(true);
 
             // Act
@@ -74,7 +74,7 @@ namespace Satellite.DataAccess.Services.Tests
             {
                 Latitude = 0,
                 Longitude = 0
-            }, TEST_CACHE_KEY);
+            });
 
             // Mock the cache to return null (data not cached)
             object cachedData;
