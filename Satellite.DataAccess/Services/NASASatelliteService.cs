@@ -17,7 +17,26 @@ namespace Satellite.DataAccess.Services
             this._coords = coords;
         }
 
-        async public Task<IEnumerable<Models.Satellite>> GetSatellitesAsync()
+        async public Task<IEnumerable<Models.Satellite>> GetWeatherStationsAsync()
+        {
+            return await GetSatellitesAsync(SatelliteType.Weather);
+        }
+        async public Task<IEnumerable<Models.Satellite>> GetISSAsync()
+        {
+            return await GetSatellitesAsync(SatelliteType.ISS);
+        }
+
+        async public Task<IEnumerable<Models.Satellite>> GetStarlinksAsync()
+        {
+            return await GetSatellitesAsync(SatelliteType.Starlink);
+        }
+
+        async public Task<IEnumerable<Models.Satellite>> GetIridiumsAsync()
+        {
+            return await GetSatellitesAsync(SatelliteType.Iridium);
+        }
+
+        async public Task<IEnumerable<Models.Satellite>> GetSatellitesAsync(SatelliteType type)
         {
             var cachedData = GetSatellitesFromCache();
             if (cachedData != null && cachedData.Any())
@@ -25,7 +44,7 @@ namespace Satellite.DataAccess.Services
                 return cachedData;
             }
 
-            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90, (int)SatelliteType.ISS);
+            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90, (int)type);
             var satellites = response.Select(i => new Models.Satellite
             {
                 Name = i.Satname,

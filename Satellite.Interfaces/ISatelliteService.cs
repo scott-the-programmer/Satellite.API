@@ -1,6 +1,7 @@
 ﻿public interface ISatelliteService
 {
-    void CacheSatelliteData(IEnumerable<Satellite.Models.Satellite> value);
-    Task<IEnumerable<Satellite.Models.Satellite>> GetSatellitesAsync();
-    IEnumerable<Satellite.Models.Satellite>? GetSatellitesFromCache();
+    Task<IEnumerable<Satellite.Models.Satellite>> GetWeatherStationsAsync();
+    Task<IEnumerable<Satellite.Models.Satellite>> GetISSAsync();
+    Task<IEnumerable<Satellite.Models.Satellite>> GetStarlinksAsync();
+    Task<IEnumerable<Satellite.Models.Satellite>> GetIridiumsAsync();
 }

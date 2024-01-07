@@ -45,7 +45,7 @@ namespace Satellite.DataAccess.Services.Tests
                            .Returns(true);
 
             // Act
-            var satellites = await service.GetSatellitesAsync();
+            var satellites = await service.GetIridiumsAsync();
 
             // Assert
             Assert.Multiple(() =>
@@ -85,7 +85,7 @@ namespace Satellite.DataAccess.Services.Tests
 
 
             // Act
-            var satellites = await service.GetSatellitesAsync();
+            var satellites = await service.GetIridiumsAsync();
 
             // Assert
             Assert.Multiple(() =>
