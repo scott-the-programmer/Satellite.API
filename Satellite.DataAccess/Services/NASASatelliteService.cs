@@ -44,11 +44,19 @@ namespace Satellite.DataAccess.Services
             }
 
             var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90, (int)type);
-            var satellites = response.Select(i => new Models.Satellite
+            var satellites = response.Select(i =>
             {
-                Name = i.Satname,
-                Latitude = i.Satlat,
-                Longitude = i.Satlng,
+                var relativeX = CalculateRelativeX(i.Satlng, _coords.Longitude);
+                var relativeY = CalculateRelativeY(i.Satlat, _coords.Latitude);
+
+                return new Models.Satellite
+                {
+                    Name = i.Satname,
+                    Latitude = i.Satlat,
+                    Longitude = i.Satlng,
+                    RelativeX = relativeX,
+                    RelativeY = relativeY
+                };
             });
 
             CacheSatelliteData(cacheKey, satellites);
@@ -65,6 +73,21 @@ namespace Satellite.DataAccess.Services
         public void CacheSatelliteData(string key, IEnumerable<Models.Satellite> value)
         {
             _cache.Set(key, value, DateTimeOffset.Now.Add(TimeSpan.FromMinutes(5)));
+        }
+
+        private float CalculateRelativeX(float satLongitude, float currentLongitude)
+        {
+            return (float)((satLongitude - currentLongitude) * Math.Cos(DegreeToRadian(_coords.Latitude)));
+        }
+
+        private float CalculateRelativeY(float satLatitude, float currentLatitude)
+        {
+            return satLatitude - currentLatitude;
+        }
+
+        private float DegreeToRadian(double degree)
+        {
+            return (float)(degree * (Math.PI / 180));
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class CurrentCoords
     {
-        public double Longitude;
-        public double Latitude;
+        public float Longitude;
+        public float Latitude;
     }
 }

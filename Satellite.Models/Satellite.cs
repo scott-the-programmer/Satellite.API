@@ -9,10 +9,16 @@ namespace Satellite.Models
         public required string Name { get; set; }
 
         [JsonProperty("latitude")]
-        public double Latitude { get; set; }
+        public float Latitude { get; set; }
 
         [JsonProperty("longitude")]
-        public double Longitude { get; set; }
+        public float Longitude { get; set; }
+
+        [JsonProperty("relativeX")]
+        public float RelativeX { get; set; }
+
+        [JsonProperty("relativeY")]
+        public float RelativeY { get; set; }
     }
 
 }

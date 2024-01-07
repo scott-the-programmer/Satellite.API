@@ -26,13 +26,13 @@ namespace Satellite.Models
         public DateTimeOffset LaunchDate { get; set; }
 
         [JsonPropertyName("satlat")]
-        public double Satlat { get; set; }
+        public float Satlat { get; set; }
 
         [JsonPropertyName("satlng")]
-        public double Satlng { get; set; }
+        public float Satlng { get; set; }
 
         [JsonPropertyName("satalt")]
-        public double Satalt { get; set; }
+        public float Satalt { get; set; }
     }
 
     public class Info
