@@ -39,7 +39,7 @@ builder.Services.AddSingleton<ISatelliteService, SatelliteService>(o =>
     var cache = o.GetService<IMemoryCache>();
     var lon = Environment.GetEnvironmentVariable("CURRENT_LONGITUDE");
     var lat = Environment.GetEnvironmentVariable("CURRENT_LATITUDE");
-    return new SatelliteService(client, cache, new Satellite.Models.CurrentCoords { Longitude = Convert.ToDouble(lon), Latitude = Convert.ToDouble(lat) });
+    return new SatelliteService(client, cache, new Satellite.Models.CurrentCoords { Longitude = float.Parse(lon), Latitude = float.Parse(lat) });
 });
 #pragma warning restore CS8604 // Possible null reference argument.
 
