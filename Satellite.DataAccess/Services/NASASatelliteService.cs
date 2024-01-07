@@ -25,7 +25,7 @@ namespace Satellite.DataAccess.Services
                 return cachedData;
             }
 
-            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90);
+            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 90, (int)SatelliteType.ISS);
             var satellites = response.Select(i => new Models.Satellite
             {
                 Name = i.Satname,

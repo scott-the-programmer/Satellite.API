@@ -2,6 +2,65 @@
 using Satellite.Models;
 using System.Text.Json;
 
+public enum SatelliteType
+{
+    AmateurRadio = 18,
+    BeidouNavigationSystem = 35,
+    Brightest = 1,
+    Celestis = 45,
+    ChineseSpaceStation = 54,
+    CubeSats = 32,
+    DisasterMonitoring = 8,
+    EarthResources = 6,
+    Education = 29,
+    Engineering = 28,
+    Experimental = 19,
+    Flock = 48,
+    Galileo = 22,
+    Geodetic = 27,
+    Geostationary = 10,
+    GlobalPositioningSystemConstellation = 50,
+    GlobalPositioningSystemOperational = 20,
+    Globalstar = 17,
+    GlonassConstellation = 51,
+    GlonassOperational = 21,
+    GOES = 5,
+    Gonets = 40,
+    Gorizont = 12,
+    Intelsat = 11,
+    Iridium = 15,
+    IRNSS = 46,
+    ISS = 2,
+    Lemur = 49,
+    Military = 30,
+    Molniya = 14,
+    NavyNavigationSatelliteSystem = 24,
+    NOAA = 4,
+    O3BNetworks = 43,
+    OneWeb = 53,
+    Orbcomm = 16,
+    Parus = 38,
+    QZSS = 47,
+    RadarCalibration = 31,
+    Raduga = 13,
+    RussianLEONavigation = 25,
+    SatelliteBasedAugmentationSystem = 23,
+    SearchAndRescue = 7,
+    SpaceAndEarthScience = 26,
+    Starlink = 52,
+    Strela = 39,
+    TrackingAndDataRelaySatelliteSystem = 9,
+    Tselina = 44,
+    Tsikada = 42,
+    Tsiklon = 41,
+    TV = 34,
+    Weather = 3,
+    WestfordNeedles = 37,
+    XMAndSirius = 33,
+    Yaogan = 36
+}
+
+
 public class N2YOSatelliteClient : ISatelliteClient
 {
     private const string N2YO_API_BASE_URL = "https://api.n2yo.com/rest/v1/satellite";
@@ -14,11 +73,11 @@ public class N2YOSatelliteClient : ISatelliteClient
         N2YO_API_KEY = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
     }
 
-    public async Task<IList<Above>> GetSatellitesAsync(double latitude, double longitude, int radius)
+    public async Task<IList<Above>> GetSatellitesAsync(double latitude, double longitude, int radius, int type)
     {
         try
         {
-            string apiUrl = $"{N2YO_API_BASE_URL}/above/{latitude}/{longitude}/0/{radius}/15&apiKey={N2YO_API_KEY}";
+            string apiUrl = $"{N2YO_API_BASE_URL}/above/{latitude}/{longitude}/0/{radius}/{type}&apiKey={N2YO_API_KEY}";
 
             var response = await _httpClient.GetAsync(apiUrl);
             if (!response.IsSuccessStatusCode)

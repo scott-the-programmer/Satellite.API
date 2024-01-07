@@ -22,7 +22,7 @@ namespace Satellite.Tests
             var nasaSatellite = new N2YOSatelliteClient(httpClientMock.Object, "1234");
 
             // Act
-            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 90);
+            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 90, 0);
 
             // Assert
             Assert.Multiple(() =>
@@ -49,7 +49,7 @@ namespace Satellite.Tests
             var nasaSatellite = new N2YOSatelliteClient(httpClientMock.Object, "1234");
 
             // Act
-            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 0);
+            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 0, 0);
 
             // Assert
             Assert.Multiple(() =>
@@ -75,7 +75,7 @@ namespace Satellite.Tests
             var nasaSatellite = new N2YOSatelliteClient(httpClientMock.Object, "1234");
 
             // Act
-            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 0);
+            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 0, 0);
 
             // Assert
             Assert.Multiple(() =>
