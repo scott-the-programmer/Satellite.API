@@ -7,7 +7,6 @@ namespace Satellite.DataAccess.Services
         private readonly ISatelliteClient _nasaSatelliteClient;
         private readonly IMemoryCache _cache;
         private readonly CurrentCoords _coords;
-        private readonly string _cacheKey;
 
         public SatelliteService(ISatelliteClient nasaSatelliteClient, IMemoryCache cache, CurrentCoords coords)
         {
