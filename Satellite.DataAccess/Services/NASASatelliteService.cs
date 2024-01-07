@@ -11,10 +11,10 @@ namespace Satellite.DataAccess.Services
 
         public SatelliteService(ISatelliteClient nasaSatelliteClient, IMemoryCache cache, CurrentCoords coords, string cacheKey = "the_satellite_bin")
         {
-            this._nasaSatelliteClient = nasaSatelliteClient;
-            this._cache = cache;
-            this._cacheKey = cacheKey;
-            this._coords = coords;
+            _nasaSatelliteClient = nasaSatelliteClient;
+            _cache = cache;
+            _cacheKey = cacheKey;
+            _coords = coords;
         }
 
         async public Task<IEnumerable<Models.Satellite>> GetWeatherStationsAsync()
