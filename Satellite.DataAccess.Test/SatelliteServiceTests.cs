@@ -10,8 +10,6 @@ namespace Satellite.DataAccess.Services.Tests
     public class SatelliteServiceTests
     {
 
-        private const string TEST_CACHE_KEY = "the_satellite_bin";
-
         [Fact]
         public async Task GetSatellitesAsync_ReturnsCachedDataIfAvailable()
         {
@@ -80,7 +78,7 @@ namespace Satellite.DataAccess.Services.Tests
             // Mock the cache to return null (data not cached)
             object cachedData;
             var cachedEntry = new Mock<ICacheEntry>();
-            memoryCacheMock.Setup(x => x.TryGetValue(TEST_CACHE_KEY, out cachedData))
+            memoryCacheMock.Setup(x => x.TryGetValue("iridium", out cachedData))
                            .Returns(false);
             memoryCacheMock.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(cachedEntry.Object);
 
