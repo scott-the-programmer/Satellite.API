@@ -2,7 +2,7 @@
 
 namespace Satellite.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SatelliteController : ControllerBase
     {
