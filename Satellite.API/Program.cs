@@ -43,9 +43,6 @@ builder.Services.AddSingleton<ISatelliteService, SatelliteService>(o =>
 });
 #pragma warning restore CS8604 // Possible null reference argument.
 
-builder.WebHost
-    .UseUrls("http://0.0.0.0:80");
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
