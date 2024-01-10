@@ -14,6 +14,12 @@ namespace Satellite.Models
         [JsonProperty("longitude")]
         public float Longitude { get; set; }
 
+        [JsonProperty("altitude")]
+        public float Altitude { get; set; }
+
+        [JsonProperty("age")]
+        public DateTimeOffset Age { get; set; }
+
     }
 
 }

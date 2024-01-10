@@ -50,6 +50,8 @@ namespace Satellite.DataAccess.Services
                     Name = i.Satname,
                     Latitude = i.Satlat,
                     Longitude = i.Satlng,
+                    Altitude = i.Satalt,
+                    Age = i.LaunchDate
                 };
             });
 
