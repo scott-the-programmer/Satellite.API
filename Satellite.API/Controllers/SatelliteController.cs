@@ -39,6 +39,28 @@ namespace Satellite.API.Controllers
             var satellites = await _nasaSatelliteService.GetIridiumsAsync();
             return Ok(satellites);
         }
+
+        [HttpGet("tv")]
+        public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetTV()
+        {
+            var satellites = await _nasaSatelliteService.GetTVAsync();
+            return Ok(satellites);
+        }
+
+        [HttpGet("celestis")]
+        public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetCeletis()
+        {
+            var satellites = await _nasaSatelliteService.GetCelestisAsync();
+            return Ok(satellites);
+        }
+
+        [HttpGet("brightest")]
+        public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetBrightest()
+        {
+            var satellites = await _nasaSatelliteService.GetBrightestAsync();
+            return Ok(satellites);
+        }
+
     }
 }
 
