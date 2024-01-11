@@ -217,19 +217,5 @@ namespace Satellite.DataAccess.Services
             _cache.Set(key, value, DateTimeOffset.Now.Add(TimeSpan.FromMinutes(5)));
         }
 
-        private float CalculateRelativeX(float satLongitude, float currentLongitude)
-        {
-            return (float)((satLongitude - currentLongitude) * Math.Cos(DegreeToRadian(_coords.Latitude)));
-        }
-
-        private float CalculateRelativeY(float satLatitude, float currentLatitude)
-        {
-            return satLatitude - currentLatitude;
-        }
-
-        private float DegreeToRadian(double degree)
-        {
-            return (float)(degree * (Math.PI / 180));
-        }
     }
 }
