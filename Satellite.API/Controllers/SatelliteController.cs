@@ -12,7 +12,7 @@ namespace Satellite.API.Controllers
             _nasaSatelliteService = nasaSatelliteService;
         }
 
-        [HttpGet("weatherstations")]
+        [HttpGet("weatherstation")]
         public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetWeatherStations()
         {
             var satellites = await _nasaSatelliteService.GetWeatherStationsAsync();
@@ -26,14 +26,14 @@ namespace Satellite.API.Controllers
             return Ok(satellites);
         }
 
-        [HttpGet("starlinks")]
+        [HttpGet("starlink")]
         public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetStarlinks()
         {
             var satellites = await _nasaSatelliteService.GetStarlinksAsync();
             return Ok(satellites);
         }
 
-        [HttpGet("iridiums")]
+        [HttpGet("iridium")]
         public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetIridiums()
         {
             var satellites = await _nasaSatelliteService.GetIridiumsAsync();
