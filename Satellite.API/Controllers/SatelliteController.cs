@@ -61,6 +61,13 @@ namespace Satellite.API.Controllers
             return Ok(satellites);
         }
 
+
+        [HttpGet("disaster-monitoring")]
+        public async Task<ActionResult<IEnumerable<Models.Satellite>>> GetDisasterMonitoring()
+        {
+            var satellites = await _nasaSatelliteService.GetDisasterMonitoringAsync();
+            return Ok(satellites);
+        }
     }
 }
 
