@@ -188,7 +188,7 @@ namespace Satellite.DataAccess.Services
                 return cachedData;
             }
 
-            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 30, (int)type);
+            var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 10, (int)type);
             var satellites = response.Select(i =>
             {
                 return new Models.Satellite
