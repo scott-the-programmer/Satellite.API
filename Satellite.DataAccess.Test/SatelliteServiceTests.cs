@@ -93,6 +93,49 @@ namespace Satellite.DataAccess.Services.Tests
                 memoryCacheMock.Verify(x => x.CreateEntry(It.IsAny<object>()), Times.Once());
             });
         }
+
+        [Fact]
+        public async Task GetIridiumsAsync_FiltersByProximity_ReturnsOnlyProximateSatellites()
+        {
+            // Arrange
+            var httpMock = new Mock<IHttpClient>();
+            var apiResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(GetSampleSatelliteDataJson()),
+            };
+
+            httpMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(apiResponse);
+
+            // Use N2YOSatelliteClient as the ISatelliteClient implementation
+            var nasaSatelliteClient = new N2YOSatelliteClient(httpMock.Object, "test-api-key");
+
+            var memoryCacheMock = new Mock<IMemoryCache>();
+            object cachedData;
+            memoryCacheMock.Setup(x => x.TryGetValue("iridium", out cachedData))
+                           .Returns(false);
+
+            var cacheEntryMock = new Mock<ICacheEntry>();
+            memoryCacheMock.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(cacheEntryMock.Object);
+
+            var userCoords = new CurrentCoords { Latitude = -35.0, Longitude = 158.0 };
+            var service = new SatelliteService(nasaSatelliteClient, memoryCacheMock.Object, userCoords);
+
+            // Act
+            var satellites = await service.GetIridiumsAsync();
+
+            // Assert
+            Assert.NotNull(satellites);
+            var proximateSatellite = Assert.Single(satellites);
+            Assert.Equal("IRIDIUM 36", proximateSatellite.Name);
+            Assert.Equal(-35.6729, proximateSatellite.Latitude);
+            Assert.Equal(158.2153, proximateSatellite.Longitude);
+
+            // Verify that the HTTP client was called (due to cache miss)
+            httpMock.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Once);
+            // Verify that the cache was attempted to be updated with the key "iridium"
+            memoryCacheMock.Verify(x => x.CreateEntry("iridium"), Times.Once);
+        }
+
         private string GetSampleSatelliteDataJson()
         {
             var sampleData = """

@@ -189,6 +189,9 @@ namespace Satellite.DataAccess.Services
             }
 
             var response = await _nasaSatelliteClient.GetSatellitesAsync(_coords.Longitude, _coords.Latitude, 4, (int)type);
+
+            const double proximityThresholdDegrees = 1.0;
+
             var satellites = response.Select(i =>
             {
                 return new Models.Satellite
@@ -199,7 +202,9 @@ namespace Satellite.DataAccess.Services
                     Altitude = i.Satalt,
                     Age = i.LaunchDate
                 };
-            });
+            })
+            .Where(s => Math.Abs(s.Latitude - _coords.Latitude) < proximityThresholdDegrees &&
+                        Math.Abs(s.Longitude - _coords.Longitude) < proximityThresholdDegrees);
 
             CacheSatelliteData(cacheKey, satellites);
 

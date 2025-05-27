@@ -10,26 +10,24 @@ namespace Satellite.Tests
         public async Task GetSatellitesAsync_ReturnsSatelliteData()
         {
             // Arrange
-            var httpClientMock = new Mock<IHttpClient>();
-            var expectedData = GetSampleSatelliteDataJson();
+            var httpMock = new Mock<IHttpClient>();
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedData),
+                Content = new StringContent(GetSampleSatelliteDataJson()),
             };
 
-            httpClientMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(response);
+            httpMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(response);
 
-            var nasaSatellite = new N2YOSatelliteClient(httpClientMock.Object, "1234");
+            var client = new N2YOSatelliteClient(httpMock.Object, "test-api-key");
 
             // Act
-            var satellites = await nasaSatellite.GetSatellitesAsync(0, 0, 90, 0);
+            var satellites = await client.GetSatellitesAsync(-35.0, 158.0);
 
             // Assert
-            Assert.Multiple(() =>
-            {
-                Assert.NotEmpty(satellites);
-                Assert.NotNull(satellites);
-            });
+            Assert.NotNull(satellites);
+            Assert.Equal(8, satellites.Above.Count());
+            Assert.Equal("Iridium", satellites.Info.Category);
+            Assert.Equal(8, satellites.Info.SatCount);
         }
 
         [Fact]
@@ -42,9 +40,9 @@ namespace Satellite.Tests
                 Content = null
             };
 
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning disable CS8620
             _ = httpClientMock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(response);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning restore CS8620
 
             var nasaSatellite = new N2YOSatelliteClient(httpClientMock.Object, "1234");
 
@@ -57,7 +55,6 @@ namespace Satellite.Tests
                 Assert.Empty(satellites);
                 Assert.NotNull(satellites);
             });
-
         }
 
         [Fact]
