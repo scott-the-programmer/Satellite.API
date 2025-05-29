@@ -118,7 +118,7 @@ namespace Satellite.DataAccess.Services.Tests
             memoryCacheMock.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(cacheEntryMock.Object);
 
             // Changed double literals to float literals by adding 'F' suffix
-            var userCoords = new CurrentCoords { Latitude = -35.0F, Longitude = 158.0F };
+            var userCoords = new CurrentCoords { Latitude = (float)-35.0, Longitude = (float)158.0 };
             var service = new SatelliteService(nasaSatelliteClient, memoryCacheMock.Object, userCoords);
 
             // Act
