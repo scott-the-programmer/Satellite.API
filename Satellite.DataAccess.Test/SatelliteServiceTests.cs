@@ -4,6 +4,7 @@ using Satellite.Interfaces;
 using Satellite.Models;
 using System.Net;
 using System.Text.Json;
+using FluentAssertions;
 
 namespace Satellite.DataAccess.Services.Tests
 {
@@ -127,9 +128,9 @@ namespace Satellite.DataAccess.Services.Tests
             // Assert
             Assert.NotNull(satellites);
             var proximateSatellite = Assert.Single(satellites);
-            Assert.Equal("IRIDIUM 36", proximateSatellite.Name);
-            Assert.Equal(-35.6729, proximateSatellite.Latitude);
-            Assert.Equal(158.2153, proximateSatellite.Longitude);
+            proximateSatellite.Name.Should().Be("IRIDIUM 36");
+            proximateSatellite.Latitude.Should().BeApproximately(-35.6729f, 0.0001f);
+            proximateSatellite.Longitude.Should().BeApproximately(158.2153f, 0.0001f);
 
             // Verify that the HTTP client was called (due to cache miss)
             httpMock.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Once);

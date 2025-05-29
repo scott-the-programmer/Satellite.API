@@ -21,13 +21,11 @@ namespace Satellite.Tests
             var client = new N2YOSatelliteClient(httpMock.Object, "test-api-key");
 
             // Act
-            var satellites = await client.GetSatellitesAsync(-35.0, 158.0);
+            var satellites = await client.GetSatellitesAsync(-35.0, 158.0, 3, (int)SatelliteType.Iridium);
 
             // Assert
             Assert.NotNull(satellites);
-            Assert.Equal(8, satellites.Above.Count());
-            Assert.Equal("Iridium", satellites.Info.Category);
-            Assert.Equal(8, satellites.Info.SatCount);
+            Assert.Equal(8, satellites.Count());
         }
 
         [Fact]
