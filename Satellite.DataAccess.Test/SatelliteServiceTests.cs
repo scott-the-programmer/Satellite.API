@@ -127,7 +127,8 @@ namespace Satellite.DataAccess.Services.Tests
 
             // Assert
             Assert.NotNull(satellites);
-            var proximateSatellite = Assert.Single(satellites);
+            Assert.Equal(3, satellites.Count());
+            var proximateSatellite = satellites.First();
             proximateSatellite.Name.Should().Be("IRIDIUM 36");
             proximateSatellite.Latitude.Should().BeApproximately(-35.6729f, 0.0001f);
             proximateSatellite.Longitude.Should().BeApproximately(158.2153f, 0.0001f);
